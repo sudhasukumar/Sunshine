@@ -3,6 +3,7 @@ package com.example.sudha.sunshine;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -71,6 +72,7 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
             reconstructedFromIntentWeatherDataHashMap.put(CLOUDS,intentExtrasBundle.getString(CLOUDS));
             Log.v(LOG_TAG, "Completed reconstructing from HashMap");
         }
+
         super.onCreate(savedInstanceState);
     }
 
@@ -81,6 +83,20 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
         weatherDetailTextView = (TextView) weatherDetailView.findViewById(R.id.Detailed_item_forecast_textview);
         weatherDetailTextView.setText(reconstructedFromIntentWeatherDataHashMap.toString());
         return weatherDetailView;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.action_settings)
+        {
+            Log.v( LOG_TAG, "User Pressed Preferences from Detail Forecast Fragment");
+            return false;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +71,10 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
     public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_forecastfragment, menu);
+        menuInflater.inflate(R.menu.menu_listforecastfragment, menu);
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

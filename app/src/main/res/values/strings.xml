@@ -2,15 +2,36 @@
 <resources>
 
     <string name="app_name">Sunshine</string>
+    <string name="base_app_name">BaseMenuActivity</string>
+    <string name="app_settings_name">Settings</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="Today_Sunny">Today is Sunny</string>
     <string name="Today_June24th">Today June 24th</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_my_choice">My Choices</string>
+
 
     <string name="twenty_one_degrees">21°</string>
     <string name="eight_degrees">8°</string>
+
+    <string name="location_dialog_title_edittext_preference">Enter Your Location Zipcode</string>
+    <string name="location_summary_edittext_preference">Enter the zipcode to fetch weather</string>
+    <string name="location_title_edittext_preference">Location</string>
+    <string name="units_title_list_preference">Pick your units</string>
+    <string name="units_summary_list_preference">Choose the units for weather data to be displayed</string>
+    <string name="units_dialog_title_list_preference">Pick your Units</string>
+
+    <string name="default_location_zipcode">08902,USA</string>
+    <string name="default_unit_preference">metric</string>
+
+
+    <string name="preference_units_summary">In what units do you want to get the weather information ?</string>
+    <string name="preference_units_title">Pick Your Units</string>
+    <string name="preference_location_summary">Enter the zipcode of the location for weather information</string>
+    <string name="preference_location_title">Your Location</string>
 
 
 </resources>
