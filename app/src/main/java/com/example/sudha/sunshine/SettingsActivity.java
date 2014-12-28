@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-
-import java.util.List;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -29,19 +26,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new WeatherPreferenceFragment())
-                .commit();
-
+        addPreferencesFromResource(R.xml.preferences);
 
 
     }
 
-    @Override
-    public void onBuildHeaders(List<Header> target)
-    {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-    }
+
     @Override
     public boolean onPreferenceClick(Preference preference)
     {
@@ -74,7 +64,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         if (preference instanceof ListPreference)
         {
-            // For list preferences_location, look up the correct display value in
+            // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
             int prefIndex = listPreference.findIndexOfValue(stringValue);
@@ -85,38 +75,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         }
         else
         {
-            // For other preferences_location, set the summary to the value's simple string representation.
+            // For other preferences, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
         }
         return true;
     }
-
-
-    public static class WeatherPreferenceFragment extends PreferenceFragment
-    {
-        @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences_location);
-            addPreferencesFromResource(R.xml.preferences_units);
-
-            String settings;
-            Bundle extras = getArguments();
-
-
-            if ( extras != null)
-            {
-                settings = getArguments().getString("Key");
-                if ("Location".equals(settings))
-                    addPreferencesFromResource(R.xml.preferences_location);
-                else if ("Units".equals(settings))
-                    addPreferencesFromResource(R.xml.preferences_units);
-
-            }
-
-
-        }
-    }
-
 }

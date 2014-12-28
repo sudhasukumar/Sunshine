@@ -2,9 +2,7 @@ package com.example.sudha.sunshine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,9 +22,9 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, new ListForecastFragment())
                     .commit();
         }
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_location, false);
+        /*PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         PreferenceManager.setDefaultValues(this, R.xml.preferences_units, false);
-        Log.v(LOG_TAG, "Default Preferences loaded from XML");
+        Log.v(LOG_TAG, "Default Preferences loaded from XML");*/
     }
 
 
