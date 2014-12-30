@@ -18,7 +18,7 @@ import android.preference.PreferenceManager;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener , Preference.OnPreferenceClickListener
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener
 {
 
     @SuppressWarnings("deprecation")
@@ -27,17 +27,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.Location)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.Unit)));
 
 
     }
 
-
-    @Override
-    public boolean onPreferenceClick(Preference preference)
-    {
-        bindPreferenceSummaryToValue(preference);
-        return false;
-    }
     /**
      * Attaches a listener so the summary is always updated with the preference value.
      * Also fires the listener once, to initialize the summary (so it shows up before the value

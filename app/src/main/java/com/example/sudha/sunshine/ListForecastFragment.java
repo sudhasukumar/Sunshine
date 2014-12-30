@@ -1,6 +1,8 @@
 package com.example.sudha.sunshine;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,30 +19,46 @@ import java.util.List;
 /**
  * Created by Sudha on 12/18/2014 at 8:52 PM.
  */
-public class ListForecastFragment extends android.support.v4.app.Fragment implements AsyncResponseInterface
+public class ListForecastFragment extends android.support.v4.app.Fragment implements onFetchWeatherTaskListener
 {
     /**
      * A Forecast fragment containing a Listview to display weather using FetchWeatherTask
      */
     public static final String LOG_TAG = ListForecastFragment.class.getSimpleName();
+    private static String UNIT_TYPE;
 
     ArrayAdapter <String> stringArrayAdapter;
     FetchWeatherTask fetchWeatherTask;
 
-    //final String INPUT_ZIPCODE = "94043";
-    final String INPUT_ZIPCODE = "08902,USA";
+    //INPUT_ZIPCODE = "94043";
+    private static String INPUT_ZIPCODE;
+    SharedPreferences sharedPrefs;
+
 
     public ListForecastFragment()
     {
 
     }
 
+    /*@Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        try
+        {
+            mListener = (OnArticleSelectedListener) activity;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(activity.toString() + " must implement onFetchWeatherTaskListener");
+        }
+    }*/
+
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -48,13 +66,13 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
     {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        List<String> simpleWeatherDataArrayList = new ArrayList<>(6);
-        simpleWeatherDataArrayList.add(0, "Today-static-83/63");
+        List<String> simpleWeatherDataArrayList = new ArrayList<>();
+        /*simpleWeatherDataArrayList.add(0, "Today-static-83/63");
         simpleWeatherDataArrayList.add(1, "Tue-Foggy-70/46");
         simpleWeatherDataArrayList.add(2, "Wed-Cloudy-72/63");
         simpleWeatherDataArrayList.add(3, "Thurs-Rainy-64/51");
         simpleWeatherDataArrayList.add(4, "Fri-Foggy-70/46");
-        simpleWeatherDataArrayList.add(5, "Sat-Sunny-76/68");
+        simpleWeatherDataArrayList.add(5, "Sat-Sunny-76/68");*/
 
         stringArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast_textview, R.id.list_item_forecast_textview, simpleWeatherDataArrayList);
 
@@ -65,6 +83,20 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
         listview_forecast.setOnItemClickListener(new WeatherListViewOnItemClickListener());
 
         return rootView;
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.Location), getString(R.string.default_location));
+        UNIT_TYPE = sharedPrefs.getString(getString(R.string.Unit),getString(R.string.default_unit));
+
+        Log.v(LOG_TAG, "Preferences loaded from XML" + sharedPrefs.getAll().toString());
+
+        updateWeather();
     }
 
     @Override
@@ -81,26 +113,32 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
     {
         int id = item.getItemId();
 
-
-        Log.v(LOG_TAG , id + " : " + "Forecast Fragment menu option has been selected for " + INPUT_ZIPCODE);
         if (id == R.id.action_refresh)
         {
-            fetchWeatherTask = new FetchWeatherTask();
-            fetchWeatherTask.delegate = this;
-
-            fetchWeatherTask.execute(INPUT_ZIPCODE);
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void updateWeather()
+    {
+        fetchWeatherTask = new FetchWeatherTask();
+        fetchWeatherTask.asyncResponseDelegate = this;
+
+        Log.v(LOG_TAG , "Forecast Fragment menu option has been selected for " + INPUT_ZIPCODE + " : " + UNIT_TYPE);
+
+        fetchWeatherTask.execute(INPUT_ZIPCODE,UNIT_TYPE);
+    }
+
     @Override
-    public void processFinish(List<String> ArrayListOfStrings)
+    public void onFetchWeatherTask(List<String> ArrayListOfStrings)
     {
         stringArrayAdapter.clear();
         stringArrayAdapter.addAll(ArrayListOfStrings);
-        /* stringArrayAdapter.notifyDataSetChanged(); This will be called internally by the framework when the data changes */
         Log.v(LOG_TAG, "Check if Data has changed in List view");
     }
+
+
 }
 

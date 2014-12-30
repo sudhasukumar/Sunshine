@@ -51,7 +51,7 @@ public class WeatherDataParser
     {
     }
 
-    protected List<String> getWeatherListDataFromJson()
+    protected List<String> getWeatherListDataFromJson(String UNIT_TYPE)
     {
         try
         {
@@ -88,7 +88,12 @@ public class WeatherDataParser
                 //Log.v(LOG_TAG , " max : "+ max);
 
                 weatherData.append(" - ");
-                weatherData.append(formatHighLows(min, max));
+
+                //Important conversion of temperature units based on user preferences
+                if (UNIT_TYPE.equals(Integer.toString(R.string.Imperial)))
+                    weatherData.append(formatHighLows(completeTemperatureConversion(max),completeTemperatureConversion(min)));
+                else
+                    weatherData.append(formatHighLows(max,min));
 
                 //Log.v(LOG_TAG , " weatherData : "+ weatherData.toString());
 
@@ -175,5 +180,13 @@ public class WeatherDataParser
         return (Math.round(high) + "/" + Math.round(low));
     }
 
+    //This method converts metric temp to Imperial temperature if the user preference is set to Imperial
+    private double completeTemperatureConversion(double temp)
+    {
+        Log.v(LOG_TAG, "Weather Temp Conversion from metric to imperial ");
+        temp = (temp * 1.8) +32;
+        return temp;
+
+    }
 
 }

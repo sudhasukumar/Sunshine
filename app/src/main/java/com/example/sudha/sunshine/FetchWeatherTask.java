@@ -19,7 +19,7 @@ import java.util.List;
 public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
 {
     private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
-    public AsyncResponseInterface delegate=null;
+    public onFetchWeatherTaskListener asyncResponseDelegate =null;
     List<String> weatherDataArrayList;
 
     public FetchWeatherTask()
@@ -49,7 +49,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
         final String ZIPCODE = "q";
 
         final String JSON = "json";
-        final String METRIC = "metric";
+        final String UNIT_TYPE = "metric";
         final int numDays = 7;
 
 
@@ -68,14 +68,15 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
 
             weatherTaskUriBuilder.appendQueryParameter(ZIPCODE, params[0]);
             weatherTaskUriBuilder.appendQueryParameter(MODE, JSON);
-            weatherTaskUriBuilder.appendQueryParameter(UNITS, METRIC);
+            weatherTaskUriBuilder.appendQueryParameter(UNITS, "metric");
             weatherTaskUriBuilder.appendQueryParameter(COUNT, Integer.toString(numDays));
 
             String weatherTaskUrlString = weatherTaskUriBuilder.build().toString();
-            Log.v(LOG_TAG, weatherTaskUrlString);
+            Log.v(LOG_TAG, "Weather API URL String " +  weatherTaskUrlString);
 
 
             //http://api.openweathermap.org/data/2.5/forecast/daily?q=08902%2CUSA&mode=json&units=metric&cnt=7
+            //http://api.openweathermap.org/data/2.5/forecast/daily?q=74120,USA&mode=json&units=metric&cnt=7
             //URL weatherTaskUrl = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
             URL weatherTaskUrl = new URL(weatherTaskUrlString);
 
@@ -103,7 +104,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
             if (buffer.length() != 0)
             {
                 WeatherDataHolder.setWeatherDataFromApiCall(buffer.toString());
-                weatherDataArrayList = new WeatherDataParser().getWeatherListDataFromJson();
+                weatherDataArrayList = new WeatherDataParser().getWeatherListDataFromJson(UNIT_TYPE);
                 //Log.v( LOG_TAG , "buffer.toString() : " + buffer.toString());
             }
 
@@ -135,6 +136,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
     @Override
     protected void onPostExecute(List<String> weatherDataArrayListresult)
     {
-        delegate.processFinish(weatherDataArrayListresult);
+        asyncResponseDelegate.onFetchWeatherTask(weatherDataArrayListresult);
     }
 }
