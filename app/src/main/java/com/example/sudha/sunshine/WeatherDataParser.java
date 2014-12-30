@@ -51,14 +51,14 @@ public class WeatherDataParser
     {
     }
 
-    protected List<String> getWeatherListDataFromJson()
+    protected List<String> getWeatherListDataFromJson(String unitType)
     {
         try
         {
             JSONObject weatherInputJsonObject = new JSONObject(WeatherDataHolder.getWeatherDataFromApiCall());
 
             JSONArray weatherDaysArray = weatherInputJsonObject.getJSONArray("list");
-            Log.v(LOG_TAG , " weatherDaysArray.length() : "+ weatherDaysArray.length());
+            Log.v(LOG_TAG , " Weather Data for number of days : "+ weatherDaysArray.length() + " in UNIT_TYPE : " + unitType);
 
             weatherDataArrayList = new ArrayList<>();
 
@@ -88,7 +88,15 @@ public class WeatherDataParser
                 //Log.v(LOG_TAG , " max : "+ max);
 
                 weatherData.append(" - ");
-                weatherData.append(formatHighLows(min, max));
+
+                //Important conversion of temperature units based on user preferences
+
+                if (unitType.equals("imperial"))
+                {
+                    weatherData.append(formatHighLows(completeTemperatureConversion(max), completeTemperatureConversion(min)));
+                }
+                else
+                    weatherData.append(formatHighLows(max,min));
 
                 //Log.v(LOG_TAG , " weatherData : "+ weatherData.toString());
 
@@ -104,7 +112,7 @@ public class WeatherDataParser
         return weatherDataArrayList;
     }
 
-    public HashMap<String, String> getOnItemClickWeatherDataFromJson(int position)
+    public HashMap<String, String> getOnItemClickWeatherDataFromJson(int position,String unitType)
     {
         HashMap<String, String> OnListItemClickWeatherData = new HashMap<>();
         try
@@ -117,12 +125,32 @@ public class WeatherDataParser
             OnListItemClickWeatherData.put(DATE,getReadableDateString(dt));
 
             JSONObject weatherJsonTempObject = weatherJsonDayObject.getJSONObject("temp");
-            OnListItemClickWeatherData.put(DAY, String.valueOf(weatherJsonTempObject.getDouble("day")));
-            OnListItemClickWeatherData.put(MIN, String.valueOf(weatherJsonTempObject.getDouble("min")));
-            OnListItemClickWeatherData.put(MAX, String.valueOf(weatherJsonTempObject.getDouble("max")));
-            OnListItemClickWeatherData.put(NIGHT, String.valueOf(weatherJsonTempObject.getDouble("night")));
-            OnListItemClickWeatherData.put(EVENING, String.valueOf(weatherJsonTempObject.getDouble("eve")));
-            OnListItemClickWeatherData.put(MORNING, String.valueOf(weatherJsonTempObject.getDouble("morn")));
+            if (unitType.equals("imperial"))
+            {
+                long day = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("day")));
+                OnListItemClickWeatherData.put(DAY, String.valueOf(day));
+                long min = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("min")));
+                OnListItemClickWeatherData.put(MIN, String.valueOf(min));
+                long max = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("max")));
+                OnListItemClickWeatherData.put(MAX, String.valueOf(max));
+                long night = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("night")));
+                OnListItemClickWeatherData.put(NIGHT, String.valueOf(night));
+                long eve = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("eve")));
+                OnListItemClickWeatherData.put(EVENING, String.valueOf(eve));
+                long morn = formatTemp(completeTemperatureConversion(weatherJsonTempObject.getDouble("morn")));
+                OnListItemClickWeatherData.put(MORNING, String.valueOf(morn));
+            }
+            else
+            {
+                OnListItemClickWeatherData.put(DAY, String.valueOf(weatherJsonTempObject.getDouble("day")));
+                OnListItemClickWeatherData.put(MIN, String.valueOf(weatherJsonTempObject.getDouble("min")));
+                OnListItemClickWeatherData.put(MAX, String.valueOf(weatherJsonTempObject.getDouble("max")));
+                OnListItemClickWeatherData.put(NIGHT, String.valueOf(weatherJsonTempObject.getDouble("night")));
+                OnListItemClickWeatherData.put(EVENING, String.valueOf(weatherJsonTempObject.getDouble("eve")));
+                OnListItemClickWeatherData.put(MORNING, String.valueOf(weatherJsonTempObject.getDouble("morn")));
+
+            }
+
 
             OnListItemClickWeatherData.put(PRESSURE, String.valueOf(weatherJsonDayObject.getLong("pressure")));
             OnListItemClickWeatherData.put(HUMIDITY, String.valueOf(weatherJsonDayObject.getLong("humidity")));
@@ -175,5 +203,19 @@ public class WeatherDataParser
         return (Math.round(high) + "/" + Math.round(low));
     }
 
+    private long formatTemp(double temp)
+    {
+        // For presentation, assume the user doesn't care about tenths of a degree.
+        return (Math.round(temp));
+    }
+
+    //This method converts metric temp to Imperial temperature if the user preference is set to Imperial
+    private double completeTemperatureConversion(double temp)
+    {
+        //Log.v(LOG_TAG, "Weather Temp Conversion from metric to imperial ");
+        temp = (temp * 1.8) +32;
+        return temp;
+
+    }
 
 }

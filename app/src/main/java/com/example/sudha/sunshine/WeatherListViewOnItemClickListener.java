@@ -1,11 +1,11 @@
 package com.example.sudha.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,18 +24,24 @@ public class WeatherListViewOnItemClickListener implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
 
-        HashMap<String, String> weatherDataOnClickHashMap = new WeatherDataParser().getOnItemClickWeatherDataFromJson(position);
+        String unitType = sharedPrefs.getString(view.getContext().getString(R.string.unit_key), view.getContext().getString(R.string.default_unit));
 
-        Toast weatherDetailsForItemClick = Toast.makeText(parent.getContext(),weatherDataOnClickHashMap.toString(),Toast.LENGTH_LONG );
+        Log.v(LOG_TAG, "Preferences loaded from XML" + sharedPrefs.getAll().toString());
+
+        HashMap<String, String> weatherDataOnClickHashMap = new WeatherDataParser().getOnItemClickWeatherDataFromJson(position,unitType);
+
+        /*Toast weatherDetailsForItemClick = Toast.makeText(parent.getContext(),weatherDataOnClickHashMap.toString(),Toast.LENGTH_SHORT );
         weatherDetailsForItemClick.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
 
         weatherDetailsForItemClick.show();
-        Log.v( LOG_TAG, "Toast is shown");
+        Log.v( LOG_TAG, "Toast is shown");*/
 
         Intent showWeatherDetailIntent = new Intent(view.getContext(), DetailActivity.class);
         showWeatherDetailIntent.addCategory(ACTION_VIEW);
         showWeatherDetailIntent.setType("text/plain");
+
 
 
         for(Map.Entry<String, String> entry : weatherDataOnClickHashMap.entrySet())
