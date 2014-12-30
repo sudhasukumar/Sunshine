@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity
     private void openPreferredLocationMap()
     {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String userZipcode = sharedPrefs.getString(getString(R.string.Location), getString(R.string.default_location));
+        String userZipcode = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
 
 
         Uri geoLocation =  Uri.parse("geo:(0,0)").buildUpon().appendQueryParameter("q", userZipcode).build();
