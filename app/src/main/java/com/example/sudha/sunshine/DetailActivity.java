@@ -62,11 +62,11 @@ public class DetailActivity extends ActionBarActivity
             openPreferredLocationMap();
             return true;
         }
-        else if (id == R.id.action_share)
+        /*else if (id == R.id.action_share)
         {
             Log.v(LOG_TAG, "User would like to share weather details");
             return false;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
 
     }

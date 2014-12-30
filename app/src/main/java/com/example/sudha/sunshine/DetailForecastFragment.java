@@ -2,6 +2,7 @@ package com.example.sudha.sunshine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
@@ -17,8 +18,12 @@ import java.util.HashMap;
 
 /**
  * Created by Sudha on 12/24/2014 at 5:21 AM.
+ * import android.support.v4.app.Fragment;
+ import android.support.v4.view.MenuItemCompat;
+ import android.support.v7.app.ActionBarActivity;
+ import android.support.v7.widget.ShareActionProvider;
  */
-public class DetailForecastFragment extends android.support.v4.app.Fragment
+public class DetailForecastFragment extends Fragment
 {
     public static final String LOG_TAG = DetailForecastFragment.class.getSimpleName();
     private static final String SUNSHINE_TAG = "#SunshineApp";
@@ -76,32 +81,9 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
         menuInflater.inflate(R.menu.menu_shareweatherdetails, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
         menuItemShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        getShareWeatherDetailsIntent();
+        Log.v( LOG_TAG, "Set Share Intent");
 
-        /*if (menuItem.getActionProvider() != null)
-        {
-            //import android.widget.ShareActionProvider
-            //ShareActionProvider menuItemShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
-            //import android.support.v7.widget.ShareActionProvider;
-            ShareActionProvider menuItemShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-            menuItemShareActionProvider.setShareIntent(getShareWeatherDetailsIntent());
-            Log.v( LOG_TAG, "Sent Share Intent");
-        }*/
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-
-        if (id == R.id.action_share)
-        {
-            Log.v( LOG_TAG, "User would like to share weather details");
-            menuItemShareActionProvider.setShareIntent(getShareWeatherDetailsIntent());
-            Log.v( LOG_TAG, "Sent Share Intent : Check if you sent it");
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void reconstructWeatherDetails(Bundle intentExtrasBundle)
@@ -136,15 +118,15 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
         }
     }
 
-    private Intent getShareWeatherDetailsIntent()
+    private void getShareWeatherDetailsIntent()
     {
-        Intent shareWeatherDetailsIntent = new Intent();
-        shareWeatherDetailsIntent.setAction(Intent.ACTION_SEND);
+        Intent shareWeatherDetailsIntent = new Intent(Intent.ACTION_SEND);
         shareWeatherDetailsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        shareWeatherDetailsIntent.setType("text");
+        shareWeatherDetailsIntent.setType("text/plain");
         shareWeatherDetailsIntent.putExtra(Intent.EXTRA_TEXT,reconstructedFromIntentWeatherDataHashMap.toString()+ SUNSHINE_TAG);
+        menuItemShareActionProvider.setShareIntent(shareWeatherDetailsIntent);
         Log.v( LOG_TAG, "Intent is ready to share!");
-        return shareWeatherDetailsIntent;
+
     }
 }
 
