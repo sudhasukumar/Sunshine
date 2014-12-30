@@ -5,4 +5,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="MyDarkToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/action_bar_bkgnd</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
 </resources>

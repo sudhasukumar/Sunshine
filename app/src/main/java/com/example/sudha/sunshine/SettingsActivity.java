@@ -11,6 +11,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.support.v7.widget.Toolbar;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -39,7 +41,20 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         Log.v(LOG_TAG, "Preferences loaded from XML in SettingsActivity : " + sharedPrefs.getAll().toString());
 
+        setContentView(R.layout.activity_settings);
+        //import android.support.v7.widget.Toolbar;
+        Toolbar actionbar = (Toolbar) findViewById(R.id.mytoolbar);
+        actionbar.setTitle("Settings");
+        actionbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        actionbar.setNavigationOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                SettingsActivity.this.finish();
+                                                                            }
+        });
+
     }
+
 
     /**
      * Attaches a listener so the summary is always updated with the preference value.

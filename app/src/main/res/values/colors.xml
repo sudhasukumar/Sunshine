@@ -2,4 +2,5 @@
 <resources>
     <color name="textview_text_color">#FFFFFF</color>
     <color name="textview_text_bgcolor">#A4F3FF</color>
+    <color name="action_bar_bkgnd">#000000</color>
 </resources>
