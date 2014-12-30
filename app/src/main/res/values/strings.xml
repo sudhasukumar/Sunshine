@@ -4,6 +4,8 @@
     <string name="app_name">Sunshine</string>
     <string name="app_settings_name">Settings</string>
 
+    <string name="Today_Sunny">Temp String</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_mapLocation">Map</string>
@@ -23,7 +25,7 @@
     <string name="location_key"  traslatable = "false">Location</string>
     <string name="unit_key"  traslatable = "false">Units</string>
 
-    <string name="Imperial">imperial</string>
+    <string name="imperial">imperial</string>
 
 
 

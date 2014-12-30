@@ -49,7 +49,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
         final String ZIPCODE = "q";
 
         final String JSON = "json";
-        final String UNIT_TYPE = "metric";
+        //assign the user preferred unit type here
+        final String UNIT_TYPE = params[1];
         final int numDays = 7;
 
 
@@ -106,6 +107,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
                 WeatherDataHolder.setWeatherDataFromApiCall(buffer.toString());
                 weatherDataArrayList = new WeatherDataParser().getWeatherListDataFromJson(UNIT_TYPE);
                 //Log.v( LOG_TAG , "buffer.toString() : " + buffer.toString());
+                Log.v( LOG_TAG , "UNIT_TYPE in FetchWeatherTask : " + UNIT_TYPE);
             }
 
 

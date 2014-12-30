@@ -1,8 +1,12 @@
 package com.example.sudha.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +15,8 @@ import android.view.MenuItem;
  */
 public class DetailActivity extends ActionBarActivity
 {
+    public static final String LOG_TAG = DetailActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -34,7 +40,7 @@ public class DetailActivity extends ActionBarActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -51,7 +57,36 @@ public class DetailActivity extends ActionBarActivity
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
-
+        if (id == R.id.action_mapLocation)
+        {
+            openPreferredLocationMap();
+            return true;
+        }
+        else if (id == R.id.action_share)
+        {
+            Log.v(LOG_TAG, "User would like to share weather details");
+            return false;
+        }
         return super.onOptionsItemSelected(item);
+
+    }
+    private void openPreferredLocationMap()
+    {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String userZipcode = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
+
+
+        Uri geoLocation =  Uri.parse("geo:(0,0)").buildUpon().appendQueryParameter("q", userZipcode).build();
+        Intent showLocationMapIntent = new Intent();
+        showLocationMapIntent.setAction(Intent.ACTION_VIEW);
+        showLocationMapIntent.setData(geoLocation);
+
+        if (showLocationMapIntent.resolveActivity(getPackageManager()) != null)
+        {
+            Log.v(LOG_TAG, "Showing Map to User for Location :" + userZipcode);
+            startActivity(showLocationMapIntent);
+
+        }
+
     }
 }

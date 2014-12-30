@@ -76,7 +76,7 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
         menuInflater.inflate(R.menu.menu_shareweatherdetails, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
         menuItemShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        
+
         /*if (menuItem.getActionProvider() != null)
         {
             //import android.widget.ShareActionProvider
@@ -86,8 +86,6 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
             menuItemShareActionProvider.setShareIntent(getShareWeatherDetailsIntent());
             Log.v( LOG_TAG, "Sent Share Intent");
         }*/
-        /*Toast weatherDetailsShare = Toast.makeText(getActivity(),"You can share your data later. Now go do something else.",Toast.LENGTH_SHORT );
-        weatherDetailsShare.show();*/
 
     }
 
@@ -95,17 +93,12 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-        if (id == R.id.action_settings)
-        {
-            Log.v( LOG_TAG, "User Pressed Preferences from Detail Forecast Fragment");
-            return false;
-        }
-        else if (id == R.id.action_share)
+
+        if (id == R.id.action_share)
         {
             Log.v( LOG_TAG, "User would like to share weather details");
-
             menuItemShareActionProvider.setShareIntent(getShareWeatherDetailsIntent());
-            Log.v( LOG_TAG, "Sent Share Intent");
+            Log.v( LOG_TAG, "Sent Share Intent : Check if you sent it");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,9 +109,6 @@ public class DetailForecastFragment extends android.support.v4.app.Fragment
         if(intentExtrasBundle != null)
         {
             reconstructedFromIntentWeatherDataHashMap = new HashMap<>();
-
-
-            //weatherDetails.putAll((HashMap<String,String>) intentExtrasBundle.getSerializable("WeatherDetailHashMap"));
 
             reconstructedFromIntentWeatherDataHashMap.put(DATE, intentExtrasBundle.getString(DATE));
             reconstructedFromIntentWeatherDataHashMap.put(DAY,intentExtrasBundle.getString(DAY));

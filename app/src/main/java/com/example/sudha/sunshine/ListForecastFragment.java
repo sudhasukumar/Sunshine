@@ -40,20 +40,6 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
 
     }
 
-    /*@Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        try
-        {
-            mListener = (OnArticleSelectedListener) activity;
-        }
-        catch (ClassCastException e)
-        {
-            throw new ClassCastException(activity.toString() + " must implement onFetchWeatherTaskListener");
-        }
-    }*/
-
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -90,11 +76,11 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
     {
         super.onStart();
 
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.Location), getString(R.string.default_location));
-        UNIT_TYPE = sharedPrefs.getString(getString(R.string.Unit),getString(R.string.default_unit));
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
+        UNIT_TYPE = sharedPrefs.getString(getString(R.string.unit_key), getString(R.string.default_unit));
 
-        Log.v(LOG_TAG, "Preferences loaded from XML" + sharedPrefs.getAll().toString());
+        Log.v(LOG_TAG, "Preferences loaded from XML in ListForecastFragment : " + sharedPrefs.getAll().toString());
 
         updateWeather();
     }

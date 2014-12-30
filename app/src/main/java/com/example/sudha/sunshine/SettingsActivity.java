@@ -4,11 +4,13 @@ package com.example.sudha.sunshine;
  * Created by Sudha on 12/27/2014 at 3:18 AM.
  */
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -20,6 +22,7 @@ import android.preference.PreferenceManager;
  */
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener
 {
+    private static final String LOG_TAG = SettingsActivity.class.getSimpleName();
 
     @SuppressWarnings("deprecation")
     @Override
@@ -27,9 +30,14 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.Location)));
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.Unit)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.location_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.unit_key)));
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
+        String UNIT_TYPE = sharedPrefs.getString(getString(R.string.unit_key), getString(R.string.default_unit));
+
+        Log.v(LOG_TAG, "Preferences loaded from XML in SettingsActivity : " + sharedPrefs.getAll().toString());
 
     }
 
