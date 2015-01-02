@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,7 +81,7 @@ public class DetailForecastFragment extends Fragment
         MenuItem menuItem = menu.findItem(R.id.action_share);
         menuItemShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         getShareWeatherDetailsIntent();
-        Log.v( LOG_TAG, "Set Share Intent");
+        //Log.v( LOG_TAG, "Set Share Intent");
 
     }
 
@@ -114,7 +113,7 @@ public class DetailForecastFragment extends Fragment
             reconstructedFromIntentWeatherDataHashMap.put(SPEED,intentExtrasBundle.getString(SPEED));
             reconstructedFromIntentWeatherDataHashMap.put(DEG,intentExtrasBundle.getString(DEG));
             reconstructedFromIntentWeatherDataHashMap.put(CLOUDS,intentExtrasBundle.getString(CLOUDS));
-            Log.v(LOG_TAG, "Completed reconstructing from HashMap : " + weatherDetails.toString());
+            //Log.v(LOG_TAG, "Completed reconstructing from HashMap : " + weatherDetails.toString());
         }
     }
 
@@ -125,7 +124,7 @@ public class DetailForecastFragment extends Fragment
         shareWeatherDetailsIntent.setType("text/plain");
         shareWeatherDetailsIntent.putExtra(Intent.EXTRA_TEXT,reconstructedFromIntentWeatherDataHashMap.toString()+ SUNSHINE_TAG);
         menuItemShareActionProvider.setShareIntent(shareWeatherDetailsIntent);
-        Log.v( LOG_TAG, "Intent is ready to share!");
+        //Log.v( LOG_TAG, "Intent is ready to share!");
 
     }
 }

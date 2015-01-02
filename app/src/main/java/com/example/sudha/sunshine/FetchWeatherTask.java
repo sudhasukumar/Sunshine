@@ -73,7 +73,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
             weatherTaskUriBuilder.appendQueryParameter(COUNT, Integer.toString(numDays));
 
             String weatherTaskUrlString = weatherTaskUriBuilder.build().toString();
-            Log.v(LOG_TAG, "Weather API URL String " +  weatherTaskUrlString);
+            //Log.v(LOG_TAG, "Weather API URL String " +  weatherTaskUrlString);
 
 
             //http://api.openweathermap.org/data/2.5/forecast/daily?q=08902%2CUSA&mode=json&units=metric&cnt=7
@@ -106,8 +106,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
             {
                 WeatherDataHolder.setWeatherDataFromApiCall(buffer.toString());
                 weatherDataArrayList = new WeatherDataParser().getWeatherListDataFromJson(UNIT_TYPE);
-                //Log.v( LOG_TAG , "buffer.toString() : " + buffer.toString());
-                Log.v( LOG_TAG , "UNIT_TYPE in FetchWeatherTask : " + UNIT_TYPE);
+                ////Log.v( LOG_TAG , "buffer.toString() : " + buffer.toString());
+                //Log.v( LOG_TAG , "UNIT_TYPE in FetchWeatherTask : " + UNIT_TYPE);
             }
 
 

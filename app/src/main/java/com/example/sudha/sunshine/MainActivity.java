@@ -26,9 +26,43 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, new ListForecastFragment())
                     .commit();
         }
-
+        Log.v(LOG_TAG, "I am in onCreate Method of Main Activity");
+    }
+    protected void onStart()
+    {
+        Log.v(LOG_TAG, "I am in onStart Method of Main Activity");
+        super.onStart();
     }
 
+    protected void onResume()
+    {
+        Log.v(LOG_TAG, "I am in onResume Method of Main Activity");
+        super.onResume();
+    }
+
+    protected void onPause()
+    {
+        Log.v(LOG_TAG, "I am in onPause Method of Main Activity");
+        super.onPause();
+    }
+
+    protected void onStop()
+    {
+        Log.v(LOG_TAG, "I am in onStop Method of Main Activity");
+        super.onStop();
+    }
+
+    protected void onDestroy()
+    {
+        Log.v(LOG_TAG, "I am in onDestroy Method of Main Activity");
+        super.onDestroy();
+    }
+
+    protected void onRestart()
+    {
+        Log.v(LOG_TAG, "I am in onRestart Method of Main Activity");
+        super.onRestart();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -74,7 +108,7 @@ public class MainActivity extends ActionBarActivity
 
         if (showLocationMapIntent.resolveActivity(getPackageManager()) != null)
         {
-            Log.v(LOG_TAG, "Showing Map to User for Location :" + userZipcode);
+            //Log.v(LOG_TAG, "Showing Map to User for Location :" + userZipcode);
             startActivity(showLocationMapIntent);
 
         }

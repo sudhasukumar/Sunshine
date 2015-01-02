@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -83,7 +82,7 @@ public class DetailActivity extends ActionBarActivity
 
         if (showLocationMapIntent.resolveActivity(getPackageManager()) != null)
         {
-            Log.v(LOG_TAG, "Showing Map to User for Location :" + userZipcode);
+            //Log.v(LOG_TAG, "Showing Map to User for Location :" + userZipcode);
             startActivity(showLocationMapIntent);
 
         }

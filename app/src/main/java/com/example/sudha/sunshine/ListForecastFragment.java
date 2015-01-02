@@ -3,7 +3,6 @@ package com.example.sudha.sunshine;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,7 +79,7 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
         INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
         UNIT_TYPE = sharedPrefs.getString(getString(R.string.unit_key), getString(R.string.default_unit));
 
-        Log.v(LOG_TAG, "Preferences loaded from XML in ListForecastFragment : " + sharedPrefs.getAll().toString());
+        //Log.v(LOG_TAG, "Preferences loaded from XML in ListForecastFragment : " + sharedPrefs.getAll().toString());
 
         updateWeather();
     }
@@ -112,7 +111,7 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
         fetchWeatherTask = new FetchWeatherTask();
         fetchWeatherTask.asyncResponseDelegate = this;
 
-        Log.v(LOG_TAG , "Forecast Fragment menu option has been selected for " + INPUT_ZIPCODE + " : " + UNIT_TYPE);
+        //Log.v(LOG_TAG , "Forecast Fragment menu option has been selected for " + INPUT_ZIPCODE + " : " + UNIT_TYPE);
 
         fetchWeatherTask.execute(INPUT_ZIPCODE,UNIT_TYPE);
     }
@@ -122,7 +121,7 @@ public class ListForecastFragment extends android.support.v4.app.Fragment implem
     {
         stringArrayAdapter.clear();
         stringArrayAdapter.addAll(ArrayListOfStrings);
-        Log.v(LOG_TAG, "Check if Data has changed in List view");
+        //Log.v(LOG_TAG, "Check if Data has changed in List view");
     }
 
 

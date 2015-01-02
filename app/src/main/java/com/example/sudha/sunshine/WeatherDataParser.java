@@ -58,7 +58,7 @@ public class WeatherDataParser
             JSONObject weatherInputJsonObject = new JSONObject(WeatherDataHolder.getWeatherDataFromApiCall());
 
             JSONArray weatherDaysArray = weatherInputJsonObject.getJSONArray("list");
-            Log.v(LOG_TAG , " Weather Data for number of days : "+ weatherDaysArray.length() + " in UNIT_TYPE : " + unitType);
+            //Log.v(LOG_TAG , " Weather Data for number of days : "+ weatherDaysArray.length() + " in UNIT_TYPE : " + unitType);
 
             weatherDataArrayList = new ArrayList<>();
 
@@ -158,7 +158,7 @@ public class WeatherDataParser
             OnListItemClickWeatherData.put(ID, weatherJsonDayObject.getJSONArray("weather").getJSONObject(0).getString("id"));
 
             String main = weatherJsonDayObject.getJSONArray("weather").getJSONObject(0).getString("main");
-            Log.v(LOG_TAG , " main : "+ main);
+            //Log.v(LOG_TAG , " main : "+ main);
 
             OnListItemClickWeatherData.put(MAIN, main);
 
@@ -173,7 +173,7 @@ public class WeatherDataParser
             OnListItemClickWeatherData.put(CLOUDS, String.valueOf(weatherJsonDayObject.getLong("clouds")));
 
 
-            Log.v(LOG_TAG, OnListItemClickWeatherData.toString());
+            //Log.v(LOG_TAG, OnListItemClickWeatherData.toString());
 
         } catch (JSONException e)
         {

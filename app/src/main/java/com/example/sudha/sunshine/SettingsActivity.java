@@ -10,9 +10,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -39,7 +38,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         //String INPUT_ZIPCODE = sharedPrefs.getString(getString(R.string.location_key), getString(R.string.default_location));
         //String UNIT_TYPE = sharedPrefs.getString(getString(R.string.unit_key), getString(R.string.default_unit));
 
-        Log.v(LOG_TAG, "Preferences loaded from XML in SettingsActivity : " + sharedPrefs.getAll().toString());
+        //Log.v(LOG_TAG, "Preferences loaded from XML in SettingsActivity : " + sharedPrefs.getAll().toString());
 
         setContentView(R.layout.activity_settings);
         //import android.support.v7.widget.Toolbar;

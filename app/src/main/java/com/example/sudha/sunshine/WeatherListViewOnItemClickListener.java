@@ -3,7 +3,6 @@ package com.example.sudha.sunshine;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -28,7 +27,7 @@ public class WeatherListViewOnItemClickListener implements AdapterView.OnItemCli
 
         String unitType = sharedPrefs.getString(view.getContext().getString(R.string.unit_key), view.getContext().getString(R.string.default_unit));
 
-        Log.v(LOG_TAG, "Preferences loaded from XML" + sharedPrefs.getAll().toString());
+        //Log.v(LOG_TAG, "Preferences loaded from XML" + sharedPrefs.getAll().toString());
 
         HashMap<String, String> weatherDataOnClickHashMap = new WeatherDataParser().getOnItemClickWeatherDataFromJson(position,unitType);
 
